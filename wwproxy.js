@@ -1,6 +1,7 @@
 const { default: axios } = require('axios');
 var http = require('http');
 var url = require('url');
+//tạo sever lắng nghe request ở port 8080
 http.createServer(async function (req, res) {
     var key = url.parse(req?.url, true)?.query?.key?.trim();
     console.log('key:'+key);
@@ -16,7 +17,9 @@ http.createServer(async function (req, res) {
     }
     res.end(); 
 }).listen(8080); 
-
+/** getProxy Hàm này giúp gọi api của các dịch vụ proxy 
+và formar thành dạng json giúp nhập thành 1 config proxy ở hidemium rất dễ dùng
+*/
 async function getProxy(key) {
     try {
         let {data} = await axios({
@@ -51,3 +54,5 @@ async function getProxy(key) {
     }
     return false
 }
+
+//btw muốn build ra file exe thì dùng lệnh pkg wwproxy.js -t node18-win => khi chạy thì chạy bằng cmd sẽ ổn định hơn click trực tiếp vào
